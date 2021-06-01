@@ -14,7 +14,7 @@
 * limitations under the License.
 *******************************************************************************/
 
-/* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
+/* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Chorn */
 
 #ifndef TURTLEBOT3_BURGER_H_
 #define TURTLEBOT3_BURGER_H_
@@ -24,7 +24,7 @@
 #define WHEEL_RADIUS                     0.0356          // meter                                       // 35.6mm
 #define WHEEL_SEPARATION                 0.172967        // meter (BURGER : 0.160, WAFFLE : 0.287)      // 172.967mm
 #define TURNING_RADIUS                   0.086483        // meter (BURGER : 0.080, WAFFLE : 0.1435)     // 86.4835
-#define ROBOT_RADIUS                     0.105           // meter (BURGER : 0.105, WAFFLE : 0.220)      //
+#define ROBOT_RADIUS                     0.245           // meter (BURGER : 0.105, WAFFLE : 0.220)      //
 #define ENCODER_MIN                      -2147483648     // raw                                         //
 #define ENCODER_MAX                      2147483648      // raw                                         //
 
