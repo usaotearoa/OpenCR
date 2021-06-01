@@ -14,7 +14,7 @@
 * limitations under the License.
 *******************************************************************************/
 
-/* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Chorn */
+/* Authors: Just me */
 
 #ifndef TURTLEBOT3_BURGER_H_
 #define TURTLEBOT3_BURGER_H_
