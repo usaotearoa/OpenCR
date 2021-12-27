@@ -17,6 +17,9 @@
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
 
 #include "../../include/turtlebot3/turtlebot3_sensor.h"
+#include <NewPing.h>
+
+
 
 Turtlebot3Sensor::Turtlebot3Sensor()
 {
@@ -332,15 +335,19 @@ void Turtlebot3Sensor::initSonar(void)
 
   pinMode(sonar_pin_.trig, OUTPUT);
   pinMode(sonar_pin_.echo, INPUT);
+
+  //NewPing sonar(BDPIN_GPIO_1, BDPIN_GPIO_2, MAX_DISTANCE);
+
+
 }
 
 void Turtlebot3Sensor::updateSonar(uint32_t t)
-{
+{ DEBUG_SERIAL.println("in updateSonar()");
   static uint32_t t_time = 0;
   static bool make_pulse = TRUE;
   static bool get_duration = FALSE;
 
-  float distance = 0.0, duration = 0.0;
+  float distance = 1.1, duration = 0.0;
 
   if (make_pulse == TRUE)
   {
@@ -367,16 +374,28 @@ void Turtlebot3Sensor::updateSonar(uint32_t t)
   }
 
   sonar_data_ = distance;
+  //sonar_data_ = sonar.ping_cm(); 
+
 }
 
 float Turtlebot3Sensor::getSonarData(void)
-{
-  float distance = 0.0;
+{ DEBUG_SERIAL.println("in getSonarData()");
+  float distance = 1.1;
 
-  distance = sonar_data_;
+  //distance = sonar_data_;
 
   return distance;
 }
+
+// int Turtlebot3Sensor::getSonarLoopCounter(void)
+// {
+//   int currentCount = 0;
+
+//   currentCount = sonarLoopCount;
+
+//   return currentCount;
+
+// }
 
 float Turtlebot3Sensor::getIlluminationData(void)
 {

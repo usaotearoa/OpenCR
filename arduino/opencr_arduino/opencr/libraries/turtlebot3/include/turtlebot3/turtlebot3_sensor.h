@@ -94,6 +94,7 @@ class Turtlebot3Sensor
   void initSonar(void);
   void updateSonar(uint32_t t);
   float getSonarData(void);
+  // int getSonarLoopCounter(void);
 
   // Illumination sensor
   float getIlluminationData(void);
@@ -116,7 +117,8 @@ class Turtlebot3Sensor
   LedPinArray led_pin_array_;
   SonarPin sonar_pin_;
 
-  float sonar_data_;
+  float sonar_data_ = 0.0;
+  // int sonarLoopCount = 0;
 };
 
 #endif // TURTLEBOT3_SENSOR_H_

@@ -37,7 +37,7 @@ void setup()
   nh.advertise(sensor_state_pub);  
   nh.advertise(version_info_pub);
   nh.advertise(imu_pub);
-  nh.advertise(cmd_vel_rc100_pub);
+  //nh.advertise(cmd_vel_rc100_pub);
   nh.advertise(odom_pub);
   nh.advertise(joint_states_pub);
   nh.advertise(battery_state_pub);
@@ -92,11 +92,11 @@ void loop()
     tTime[0] = t;
   }
 
-  if ((t-tTime[1]) >= (1000 / CMD_VEL_PUBLISH_FREQUENCY))
-  {
-    publishCmdVelFromRC100Msg();
-    tTime[1] = t;
-  }
+  // if ((t-tTime[1]) >= (1000 / CMD_VEL_PUBLISH_FREQUENCY))
+  // {
+  //   publishCmdVelFromRC100Msg();
+  //   tTime[1] = t;
+  // }
 
   if ((t-tTime[2]) >= (1000 / DRIVE_INFORMATION_PUBLISH_FREQUENCY))
   {
@@ -131,19 +131,19 @@ void loop()
   sendLogMsg();
 
   // Receive data from RC100 
-  bool clicked_state = controllers.getRCdata(goal_velocity_from_rc100);
-  if (clicked_state == true)  
-    tTime[6] = millis();
+  // bool clicked_state = controllers.getRCdata(goal_velocity_from_rc100);
+  // if (clicked_state == true)  
+  //   tTime[6] = millis();
 
   // Check push button pressed for simple test drive
-  driveTest(diagnosis.getButtonPress(3000));
+  // driveTest(diagnosis.getButtonPress(3000));
 
   // Update the IMU unit
   sensors.updateIMU();
 
   // TODO
   // Update sonar data
-  // sensors.updateSonar(t);
+  sensors.updateSonar(t);
 
   // Start Gyro Calibration after ROS connection
   updateGyroCali(nh.connected());
@@ -274,7 +274,7 @@ void publishSensorStateMsg(void)
   sensor_state_msg.cliff = sensors.getIRsensorData();
 
   // TODO
-  // sensor_state_msg.sonar = sensors.getSonarData();
+  sensor_state_msg.sonar = sensors.getSonarData();
 
   sensor_state_msg.illumination = sensors.getIlluminationData();
   
@@ -818,41 +818,42 @@ void sendDebuglog(void)
   DEBUG_SERIAL.println("---------------------------------------");
   DEBUG_SERIAL.println("EXTERNAL SENSORS");
   DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.print("Bumper : "); DEBUG_SERIAL.println(sensors.checkPushBumper());
-  DEBUG_SERIAL.print("Cliff : "); DEBUG_SERIAL.println(sensors.getIRsensorData());
+  //DEBUG_SERIAL.print("Bumper : "); DEBUG_SERIAL.println(sensors.checkPushBumper());
+  //DEBUG_SERIAL.print("Cliff : "); DEBUG_SERIAL.println(sensors.getIRsensorData());
   DEBUG_SERIAL.print("Sonar : "); DEBUG_SERIAL.println(sensors.getSonarData());
-  DEBUG_SERIAL.print("Illumination : "); DEBUG_SERIAL.println(sensors.getIlluminationData());
+  // DEBUG_SERIAL.print("Sonar Loop Count : "); DEBUG_SERIAL.println(sensors.getSonarLoopCounter());
+  //DEBUG_SERIAL.print("Illumination : "); DEBUG_SERIAL.println(sensors.getIlluminationData());
 
-  DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.println("OpenCR SENSORS");
-  DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.print("Battery : "); DEBUG_SERIAL.println(sensors.checkVoltage());
-  DEBUG_SERIAL.println("Button : " + String(sensors.checkPushButton()));
+  // DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.println("OpenCR SENSORS");
+  // DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.print("Battery : "); DEBUG_SERIAL.println(sensors.checkVoltage());
+  // DEBUG_SERIAL.println("Button : " + String(sensors.checkPushButton()));
 
   float* quat = sensors.getOrientation();
 
-  DEBUG_SERIAL.println("IMU : ");
-  DEBUG_SERIAL.print("    w : "); DEBUG_SERIAL.println(quat[0]);
-  DEBUG_SERIAL.print("    x : "); DEBUG_SERIAL.println(quat[1]);
-  DEBUG_SERIAL.print("    y : "); DEBUG_SERIAL.println(quat[2]);
-  DEBUG_SERIAL.print("    z : "); DEBUG_SERIAL.println(quat[3]);
+  // DEBUG_SERIAL.println("IMU : ");
+  // DEBUG_SERIAL.print("    w : "); DEBUG_SERIAL.println(quat[0]);
+  // DEBUG_SERIAL.print("    x : "); DEBUG_SERIAL.println(quat[1]);
+  // DEBUG_SERIAL.print("    y : "); DEBUG_SERIAL.println(quat[2]);
+  // DEBUG_SERIAL.print("    z : "); DEBUG_SERIAL.println(quat[3]);
   
-  DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.println("DYNAMIXELS");
-  DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.println("Torque : " + String(motor_driver.getTorque()));
+  // DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.println("DYNAMIXELS");
+  // DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.println("Torque : " + String(motor_driver.getTorque()));
 
   int32_t encoder[WHEEL_NUM] = {0, 0};
   motor_driver.readEncoder(encoder[LEFT], encoder[RIGHT]);
   
-  DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
-  DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
+  // DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
+  // DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
 
-  DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.println("TurtleBot3");
-  DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.println("Odometry : ");   
-  DEBUG_SERIAL.print("         x : "); DEBUG_SERIAL.println(odom_pose[0]);
-  DEBUG_SERIAL.print("         y : "); DEBUG_SERIAL.println(odom_pose[1]);
-  DEBUG_SERIAL.print("     theta : "); DEBUG_SERIAL.println(odom_pose[2]);
+  // DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.println("TurtleBot3");
+  // DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.println("Odometry : ");   
+  // DEBUG_SERIAL.print("         x : "); DEBUG_SERIAL.println(odom_pose[0]);
+  // DEBUG_SERIAL.print("         y : "); DEBUG_SERIAL.println(odom_pose[1]);
+  // DEBUG_SERIAL.print("     theta : "); DEBUG_SERIAL.println(odom_pose[2]);
 }

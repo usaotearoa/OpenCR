@@ -19,6 +19,9 @@
 #ifndef TURTLEBOT3_CORE_CONFIG_H_
 #define TURTLEBOT3_CORE_CONFIG_H_
 #define NOETIC_SUPPORT          //uncomment this if writing code for ROS1 Noetic
+#define MAX_DISTANCE  200
+float duration, distance;
+// int sonarLoopCount = 0;
 
 #include <ros.h>
 #include <ros/time.h>
@@ -66,7 +69,7 @@
 #define TEST_DISTANCE                    0.300     // meter
 #define TEST_RADIAN                      3.14      // 180 degree
 
-// #define DEBUG                            
+#define DEBUG                            
 #define DEBUG_SERIAL                     SerialBT2
 
 // Callback function prototypes

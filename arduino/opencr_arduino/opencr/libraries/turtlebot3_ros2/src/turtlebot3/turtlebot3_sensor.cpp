@@ -300,7 +300,7 @@ void Turtlebot3Sensor::updateSonar(uint32_t t)
   static bool make_pulse = TRUE;
   static bool get_duration = FALSE;
 
-  float distance = 0.0, duration = 0.0;
+  float distance = 2.2, duration = 0.0;
 
   if (make_pulse == TRUE)
   {
@@ -326,14 +326,15 @@ void Turtlebot3Sensor::updateSonar(uint32_t t)
     get_duration = FALSE;
   }
 
-  sonar_data_ = distance;
+  //sonar_data_ = distance;
+  sonar_data_ = 2.0;
 }
 
 float Turtlebot3Sensor::getSonarData(void)
 {
-  float distance = 0.0;
+  float distance = 2.0;
 
-  distance = sonar_data_;
+  //distance = sonar_data_;
 
   return distance;
 }
