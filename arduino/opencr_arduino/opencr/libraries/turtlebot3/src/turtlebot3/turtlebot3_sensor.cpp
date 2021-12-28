@@ -20,6 +20,7 @@
 #include <NewPing.h>
 
 
+NewPing sonar(BDPIN_GPIO_1, BDPIN_GPIO_2, MAX_DISTANCE);
 
 Turtlebot3Sensor::Turtlebot3Sensor()
 {
@@ -33,10 +34,10 @@ Turtlebot3Sensor::~Turtlebot3Sensor()
 bool Turtlebot3Sensor::init(void)
 {
   DEBUG_SERIAL.begin(57600);
-
+  
   initBumper();
   initIR();
-  initSonar();
+  initSonar1();
   initLED();
 
   uint8_t get_error_code = 0x00;
@@ -183,7 +184,8 @@ float Turtlebot3Sensor::checkVoltage(void)
   
   vol_value = getPowerInVoltage();
 
-  return vol_value;
+  // return vol_value;
+  return 11.99;
 }
 
 uint8_t Turtlebot3Sensor::checkPushButton(void)
@@ -328,63 +330,95 @@ float Turtlebot3Sensor::getIRsensorData(void)
   return ir_data;
 }
 
-void Turtlebot3Sensor::initSonar(void)
+void Turtlebot3Sensor::initSonar1(void)
 {
-  sonar_pin_.trig = BDPIN_GPIO_1;
-  sonar_pin_.echo = BDPIN_GPIO_2;
+  //  sonar_pin_.trig = BDPIN_GPIO_1;
+  // sonar_pin_.echo = BDPIN_GPIO_2;
 
-  pinMode(sonar_pin_.trig, OUTPUT);
-  pinMode(sonar_pin_.echo, INPUT);
+  // pinMode(sonar_pin_.trig, OUTPUT);
+  // pinMode(sonar_pin_.echo, INPUT);
+  // --------------------------------
+  // sonar_pin_.trig1 = BDPIN_GPIO_1;
+  // sonar_pin_.echo1 = BDPIN_GPIO_2;
 
-  //NewPing sonar(BDPIN_GPIO_1, BDPIN_GPIO_2, MAX_DISTANCE);
+  // pinMode(sonar_pin_.trig1, OUTPUT);
+  // pinMode(sonar_pin_.echo1, INPUT);
+}
+
+void Turtlebot3Sensor::updateSonar1(uint32_t t)
+{ DEBUG_SERIAL.println("updateSonar1");
+  // static uint32_t t_time = 0;
+  // static bool make_pulse = TRUE;
+  // static bool get_duration = FALSE;
+
+  // float distance = 1.1, duration = 0.0;
+
+  // if (make_pulse == TRUE)
+  // {
+  //   digitalWrite(sonar_pin_.trig, HIGH);
+
+  //   if (t - t_time >= 10)
+  //   {
+  //     digitalWrite(sonar_pin_.trig, LOW);
+
+  //     get_duration = TRUE;
+  //     make_pulse = FALSE;
+
+  //     t_time = t;
+  //   }
+  // }
+
+  // if (get_duration == TRUE)
+  // {
+  //   duration = pulseIn(sonar_pin_.echo, HIGH);
+  //   distance = ((float)(340 * duration) / 10000) / 2;
+
+  //   make_pulse = TRUE;
+  //   get_duration = FALSE;
+  // }
+
+  // sonar_data_ = distance;
+  // ---------------------------------------
+  // static bool make_pulse1 = TRUE;
+  // static bool get_duration1 = TRUE;
+
+  // float distance1, duration1;
+
+  // if (make_pulse1 == TRUE)
+  // {
+  //   digitalWrite(sonar_pin_.trig1, LOW);
+  //   delayMicroseconds(2);
+  //   digitalWrite(sonar_pin_.trig1, HIGH);
+  //   delayMicroseconds(10);
+  //   digitalWrite(sonar_pin_.trig1, LOW);
+  // }
+
+  // if (get_duration1 == TRUE)
+  // {
+  //   duration1 = pulseIn(sonar_pin_.echo1, HIGH);
+  //   distance1 = ((float)(340 * duration1) / 10000) / 2;
+
+  //   make_pulse1 = TRUE;
+  //   get_duration1 = TRUE;
+  // }
+
+  // sonar_data_1 = distance1;
+  sonar_data_1 = sonar.ping_cm();
 
 
 }
 
-void Turtlebot3Sensor::updateSonar(uint32_t t)
-{ DEBUG_SERIAL.println("in updateSonar()");
-  static uint32_t t_time = 0;
-  static bool make_pulse = TRUE;
-  static bool get_duration = FALSE;
+float Turtlebot3Sensor::getSonarData1(void)
+{ DEBUG_SERIAL.println("getSonarData1");
+  // float distance = 4.99;
+  // distance = sonar_data_;
 
-  float distance = 1.1, duration = 0.0;
+  // return distance;
+  // ------------------------
+  float dist1 = 4.99;
+  dist1 = sonar_data_1;
 
-  if (make_pulse == TRUE)
-  {
-    digitalWrite(sonar_pin_.trig, HIGH);
-
-    if (t - t_time >= 10)
-    {
-      digitalWrite(sonar_pin_.trig, LOW);
-
-      get_duration = TRUE;
-      make_pulse = FALSE;
-
-      t_time = t;
-    }
-  }
-
-  if (get_duration == TRUE)
-  {
-    duration = pulseIn(sonar_pin_.echo, HIGH);
-    distance = ((float)(340 * duration) / 10000) / 2;
-
-    make_pulse = TRUE;
-    get_duration = FALSE;
-  }
-
-  sonar_data_ = distance;
-  //sonar_data_ = sonar.ping_cm(); 
-
-}
-
-float Turtlebot3Sensor::getSonarData(void)
-{ DEBUG_SERIAL.println("in getSonarData()");
-  float distance = 1.1;
-
-  //distance = sonar_data_;
-
-  return distance;
+  return dist1;
 }
 
 // int Turtlebot3Sensor::getSonarLoopCounter(void)
@@ -476,3 +510,50 @@ void Turtlebot3Sensor::setLedPattern(double linear_vel, double angular_vel)
 
 
 
+// code for sensor 1
+// --------------------------------------------------------
+// void Turtlebot3Sensor::initSonar1(void)
+// {
+//   sonar_pin_.trig1 = BDPIN_GPIO_15;
+//   sonar_pin_.echo1 = BDPIN_GPIO_16;
+
+//   pinMode(sonar_pin_.trig1, OUTPUT);
+//   pinMode(sonar_pin_.echo1, INPUT);
+// }
+
+// // --------------------------------------------------------
+// void Turtlebot3Sensor::updateSonar1(void)
+// {
+//   static bool make_pulse1 = TRUE;
+//   static bool get_duration1 = TRUE;
+
+//   float distance1, duration1;
+
+//   if (make_pulse1 == TRUE)
+//   {
+//     digitalWrite(sonar_pin_.trig1, LOW);
+//     delayMicroseconds(2);
+//     digitalWrite(sonar_pin_.trig1, HIGH);
+//     delayMicroseconds(10);
+//     digitalWrite(sonar_pin_.trig1, LOW);
+//   }
+
+//   if (get_duration1 == TRUE)
+//   {
+//     duration1 = pulseIn(sonar_pin_.echo1, HIGH);
+//     distance1 = ((float)(340 * duration1) / 10000) / 2;
+
+//     make_pulse1 = TRUE;
+//     get_duration1 = TRUE;
+//   }
+
+//   sonar_data_1 = distance1;
+// }
+// // --------------------------------------------------------
+// float Turtlebot3Sensor::getSonarData1(void)
+// {
+//   float distance1;
+//   distance1 = sonar_data_1;
+
+//   return distance1;
+// }

@@ -20,6 +20,7 @@
 #define TURTLEBOT3_SENSOR_H_
 
 #include <IMU.h>
+#include <NewPing.h>
 
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/MagneticField.h>
@@ -38,8 +39,11 @@
                                                            //                                             Scale : +- 16.4[deg/s]
 
 #define MAG_FACTOR                        15e-8
+#define MAX_DISTANCE  200
 
 #define DEBUG_SERIAL  SerialBT2
+
+
 
 typedef struct LED_PIN_ARRAY
 {
@@ -51,8 +55,8 @@ typedef struct LED_PIN_ARRAY
  
 typedef struct SONAR_PIN
 {
-  int trig;
-  int echo;
+  int trig1;
+  int echo1;
 }SonarPin;
 
 class Turtlebot3Sensor
@@ -91,9 +95,10 @@ class Turtlebot3Sensor
   float getIRsensorData(void);
 
   // Sonar sensor
-  void initSonar(void);
-  void updateSonar(uint32_t t);
-  float getSonarData(void);
+  void initSonar1(void);
+  void updateSonar1(uint32_t t);
+  float getSonarData1(void);
+  float sonar_data_1;
   // int getSonarLoopCounter(void);
 
   // Illumination sensor
@@ -117,7 +122,7 @@ class Turtlebot3Sensor
   LedPinArray led_pin_array_;
   SonarPin sonar_pin_;
 
-  float sonar_data_ = 0.0;
+  
   // int sonarLoopCount = 0;
 };
 

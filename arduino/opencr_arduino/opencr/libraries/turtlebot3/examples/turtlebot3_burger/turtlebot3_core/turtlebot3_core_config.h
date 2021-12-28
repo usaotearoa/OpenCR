@@ -19,7 +19,7 @@
 #ifndef TURTLEBOT3_CORE_CONFIG_H_
 #define TURTLEBOT3_CORE_CONFIG_H_
 #define NOETIC_SUPPORT          //uncomment this if writing code for ROS1 Noetic
-#define MAX_DISTANCE  200
+
 float duration, distance;
 // int sonarLoopCount = 0;
 

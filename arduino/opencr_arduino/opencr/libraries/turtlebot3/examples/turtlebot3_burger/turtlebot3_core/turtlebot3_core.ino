@@ -143,7 +143,8 @@ void loop()
 
   // TODO
   // Update sonar data
-  sensors.updateSonar(t);
+  delay(500);
+  sensors.updateSonar1(t);
 
   // Start Gyro Calibration after ROS connection
   updateGyroCali(nh.connected());
@@ -274,7 +275,7 @@ void publishSensorStateMsg(void)
   sensor_state_msg.cliff = sensors.getIRsensorData();
 
   // TODO
-  sensor_state_msg.sonar = sensors.getSonarData();
+  sensor_state_msg.sonar = sensors.getSonarData1();
 
   sensor_state_msg.illumination = sensors.getIlluminationData();
   
@@ -815,19 +816,20 @@ void updateGoalVelocity(void)
 *******************************************************************************/
 void sendDebuglog(void)
 {
-  DEBUG_SERIAL.println("---------------------------------------");
-  DEBUG_SERIAL.println("EXTERNAL SENSORS");
-  DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.println("---------------------------------------");
+  // DEBUG_SERIAL.println("EXTERNAL SENSORS");
+  // DEBUG_SERIAL.println("---------------------------------------");
   //DEBUG_SERIAL.print("Bumper : "); DEBUG_SERIAL.println(sensors.checkPushBumper());
   //DEBUG_SERIAL.print("Cliff : "); DEBUG_SERIAL.println(sensors.getIRsensorData());
-  DEBUG_SERIAL.print("Sonar : "); DEBUG_SERIAL.println(sensors.getSonarData());
+  // DEBUG_SERIAL.print(""); 
+  DEBUG_SERIAL.println(sensors.getSonarData1());
   // DEBUG_SERIAL.print("Sonar Loop Count : "); DEBUG_SERIAL.println(sensors.getSonarLoopCounter());
   //DEBUG_SERIAL.print("Illumination : "); DEBUG_SERIAL.println(sensors.getIlluminationData());
 
   // DEBUG_SERIAL.println("---------------------------------------");
   // DEBUG_SERIAL.println("OpenCR SENSORS");
   // DEBUG_SERIAL.println("---------------------------------------");
-  // DEBUG_SERIAL.print("Battery : "); DEBUG_SERIAL.println(sensors.checkVoltage());
+  //DEBUG_SERIAL.print("Battery : "); DEBUG_SERIAL.println(sensors.checkVoltage());
   // DEBUG_SERIAL.println("Button : " + String(sensors.checkPushButton()));
 
   float* quat = sensors.getOrientation();
